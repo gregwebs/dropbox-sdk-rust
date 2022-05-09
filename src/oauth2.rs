@@ -110,6 +110,16 @@ impl PkceCode {
         let digest = ring::digest::digest(&ring::digest::SHA256, self.code.as_bytes());
         base64::encode_config(digest.as_ref(), base64::URL_SAFE_NO_PAD)
     }
+
+    /// allows this type to be serialized as its code
+    pub fn get_code(&self) -> &str {
+        &self.code
+    }
+
+    /// allows this type to be restored from a code
+    pub fn from_code(code: String) -> Self {
+        Self { code }
+    }
 }
 
 /// Builds a URL that can be given to the user to visit to have Dropbox authorize your app.
